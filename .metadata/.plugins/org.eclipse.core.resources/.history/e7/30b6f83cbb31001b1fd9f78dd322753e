@@ -1,0 +1,34 @@
+package test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import model.Auto;
+import model.dao.Dao;
+
+class JUnit_testaa_autot {
+
+	@Test
+	public void testPoistaKaikkiAutot() {
+		Dao dao = new Dao();
+		dao.poistaKaikkiAutot("nimda");
+		ArrayList<Auto> autot = dao.listaaKaikki();
+		assertEquals(0, autot.size());
+	}
+	
+	@Test
+	public void testLisaaAuto() {
+		Dao dao = new Dao();
+		Auto auto_1 = new Auto("AAA-111", "Honda", "Civic", 2015);
+		Auto auto_2 = new Auto("BBB-222", "Fiat", "Scudo", 2016);
+		Auto auto_3 = new Auto("CCC-333", "BMW", "3301", 2017);
+		Auto auto_4 = new Auto("DDD-444", "Audi", "A4 Quattro 3.2", 2018);
+		assertEquals(true, dao.lisaaAuto(auto_2));
+		assertEquals(true, dao.lisaaAuto(auto_3));
+		assertEquals(true, dao.lisaaAuto(auto_4));
+	}
+
+}

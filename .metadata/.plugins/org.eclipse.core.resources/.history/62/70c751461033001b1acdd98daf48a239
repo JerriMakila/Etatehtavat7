@@ -1,0 +1,149 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="scripts/main.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<title>Asiakkaan lisäys</title>
+</head>
+<body>
+<form id="tiedot">
+	<table>
+		<thead>	
+			<tr>
+				<th colspan="5" id="takaisin"><a href="listaaasiakkaat.jsp" class="siirto"><span class="left-arrow"></span>Takaisin listaukseen</a></th>
+			</tr>
+			<tr>
+				<th colspan="5" id="ohje">Syötä uuden asiakkaan tiedot</th>
+			</tr>
+			<tr>
+				<th>Etunimi</th>
+				<th>Sukunimi</th>
+				<th>Puhelinnumero</th>
+				<th>Sähköposti</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="data-input"><input type="text" name="etunimi" id="etunimi"></td>
+				<td class="data-input"><input type="text" name="sukunimi" id="sukunimi"></td>
+				<td class="data-input"><input type="text" name="puhelin" id="puhelin"></td>
+				<td class="data-input"><input type="text" name="sposti" id="sposti"></td> 
+				<td class="data-input"><input type="button" id="tallenna" value="Lisää" onclick="lisaaTiedot()"></td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+<div id="ilmo"></div>
+</body>
+<script>
+//'[+]?[0-9]{2,3}[-]?[0-9]{7,9}'
+		
+var tekstikentat = document.querySelectorAll(".data-input");
+
+for(i=0; i<tekstikentat.length; i++){
+	tekstikentat[i].addEventListener("keypress", function(event){
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		    //document.getElementById("tallenna").click();
+		}
+	});
+}
+
+function lisaaTiedot(){	
+	var onkoOikein = tarkastaKentat();
+
+	if(onkoOikein){
+		document.getElementById("etunimi").value = document.getElementById("etunimi").value.trim();
+		document.getElementById("sukunimi").value = document.getElementById("sukunimi").value.trim();
+		document.getElementById("malli").value = document.getElementById("malli").value.trim();
+		document.getElementById("vuosi").value = document.getElementById("vuosi").value.trim();
+		
+		var formJsonStr=formDataToJSON(document.getElementById("tiedot")); //muutetaan lomakkeen tiedot json-stringiksi
+		//Lähetään uudet tiedot backendiin
+		fetch("asiakkaat",{//Lähetetään kutsu backendiin
+		      method: 'POST',
+		      body:formJsonStr
+		    })
+		.then( function (response) {//Odotetaan vastausta ja muutetaan JSON-vastaus objektiksi		
+			return response.json()
+		})
+		.then( function (responseJson) {//Otetaan vastaan objekti responseJson-parametrissä	
+			var vastaus = responseJson.response;		
+			if(vastaus==0){
+				document.getElementById("ilmo").innerHTML= "Auton lisääminen epäonnistui";
+	      	}else if(vastaus==1){	        	
+	      		document.getElementById("ilmo").innerHTML= "Auton lisääminen onnistui";			      	
+			}
+			//setTimeout(function(){ document.getElementById("ilmo").innerHTML=""; }, 5000);
+		});	
+		document.getElementById("tiedot").reset(); //tyhjennetään tiedot -lomake*/
+	}	
+}
+
+function tarkastaKentat(){
+	document.getElementById("ilmo").innerHTML = "";
+	var paluuArvo = true;
+	var nimiPattern = /^[a-zåäöA-ZÅÄÖ]{1,50}$/;
+	var puhelinPattern = /^[+]?[0-9]{2,3}[-]?[0-9]{7,9}$/;
+	var spostiPattern = /^[a-zA-Z]{1,}[\.]{0,1}[a-zA-Z]{0,}[@]{1}[a-zA-Z]{1,}[\.]{1}[a-zA-Z]{1,}$/;
+	
+	if(!nimiPattern.test(document.getElementById("etunimi").value)){
+		document.getElementById("ilmo").innerHTML = "<div>Etunimi ei kelpaa!</div>";
+		paluuarvo = false;
+	}
+	
+	if(!nimiPattern.test(document.getElementById("sukunimi").value)){		
+		document.getElementById("ilmo").innerHTML += "<div>Sukunimi ei kelpaa!</div>";
+		paluuArvo = false;
+	}
+	
+	if(!puhelinPattern.test(document.getElementById("puhelin").value)){		
+		document.getElementById("ilmo").innerHTML += "<div>Puhelinnumero ei kelpaa!</div>";
+		paluuArvo = false;
+	}
+	
+	if(!spostiPattern.test(document.getElementById("sposti").value)){
+		document.getElementById("ilmo").innerHTML += "<div>Sähköposti ei kelpaa!</div>";
+		paluuArvo = false;	
+	}
+	
+	return paluuArvo;
+}
+
+/*if(ilmo!=""){
+		document.getElementById("ilmo").innerHTML=ilmo;
+		setTimeout(function(){ document.getElementById("ilmo").innerHTML=""; }, 3000);
+		return;
+	}
+	document.getElementById("rekNo").value=siivoa(document.getElementById("rekNo").value);
+	document.getElementById("merkki").value=siivoa(document.getElementById("merkki").value);
+	document.getElementById("malli").value=siivoa(document.getElementById("malli").value);
+	document.getElementById("vuosi").value=siivoa(document.getElementById("vuosi").value);	
+		
+	var formJsonStr=formDataToJSON(document.getElementById("tiedot")); //muutetaan lomakkeen tiedot json-stringiksi
+	//Lähetään uudet tiedot backendiin
+	fetch("autot",{//Lähetetään kutsu backendiin
+	      method: 'POST',
+	      body:formJsonStr
+	    })
+	.then( function (response) {//Odotetaan vastausta ja muutetaan JSON-vastaus objektiksi		
+		return response.json()
+	})
+	.then( function (responseJson) {//Otetaan vastaan objekti responseJson-parametrissä	
+		var vastaus = responseJson.response;		
+		if(vastaus==0){
+			document.getElementById("ilmo").innerHTML= "Auton lisääminen epäonnistui";
+      	}else if(vastaus==1){	        	
+      		document.getElementById("ilmo").innerHTML= "Auton lisääminen onnistui";			      	
+		}
+		setTimeout(function(){ document.getElementById("ilmo").innerHTML=""; }, 5000);
+	});	
+	document.getElementById("tiedot").reset(); //tyhjennetään tiedot -lomake*/
+
+</script>
+</html>

@@ -1,0 +1,21 @@
+package test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import model.Auto;
+import model.dao.Dao;
+
+class JUnit_testaa_autot {
+
+	@Test
+	public void testPoistaKaikkiAutot() {
+		Dao dao = new Dao();
+		dao.poistaKaikkiAutot("nimda");
+		ArrayList<Auto> autot = dao.listaaKaikki();
+	}
+
+}

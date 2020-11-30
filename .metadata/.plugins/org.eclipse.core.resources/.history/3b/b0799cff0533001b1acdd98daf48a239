@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="scripts/main.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<title>Asiakkaan lisäys</title>
+</head>
+<body>
+<form id="tiedot">
+	<table>
+		<thead>	
+			<tr>
+				<th colspan="5" id="takaisin"><a href="listaaasiakkaat.jsp" class="siirto"><span class="left-arrow"></span>Takaisin listaukseen</a></th>
+			</tr>
+			<tr>
+				<th colspan="5" id="ohje">Syötä uuden asiakkaan tiedot</th>
+			</tr>
+			<tr>
+				<th>Etunimi</th>
+				<th>Sukunimi</th>
+				<th>Puhelinnumero</th>
+				<th>Sähköposti</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="data-input"><input type="text" name="etunimi" id="etunimi"></td>
+				<td class="data-input"><input type="text" name="sukunimi" id="sukunimi"></td>
+				<td class="data-input"><input type="text" name="puhelin" id="puhelin"></td>
+				<td class="data-input"><input type="text" name="sposti" id="sposti"></td> 
+				<td><input type="button" id="tallenna" value="Lisää" onclick="lisaaTiedot()"></td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+<div id="ilmo"></div>
+</body>
+<script>
+//'[+]?[0-9]{2,3}[-]?[0-9]{7,9}'
+		
+var tekstikentat = document.querySelectorAll(".data-input");
+
+for(i=0; i<tekstikentat.length; i++){
+	tekstikentat[i].addEventlistener("keypress", function(event){
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		    document.getElementById("tallenna").click();
+		}
+	});
+}
+
+function lisaaTiedot(){	
+	console.log("nappia painettu");
+}
+
+</script>
+</html>

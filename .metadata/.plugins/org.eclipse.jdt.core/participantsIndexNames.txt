@@ -1,0 +1,19 @@
+INDEX VERSION 1.131
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\485672901.index
+\Asiakkaat_natiivi_js\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2666710077.index
+\Autot\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1600358435.index
+\Autot\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1297271061.index
+\Asiakaslistaus\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2993656568.index
+\Asiakkaat\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1824721570.index
+\Dynaaminen\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\122872577.index
+\Autot_Natiivi\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2415703601.index
+\Kokeilu\src
+C:\Users\35840\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1165129417.index
+\Autot_JS_Fetch\src
